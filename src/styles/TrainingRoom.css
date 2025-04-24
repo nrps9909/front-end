@@ -1,0 +1,135 @@
+/* src/styles/TrainingRoom.css */
+
+.training-room-container {
+    display: flex;
+    flex-direction: column;
+    /* 減去 Navbar 高度 (約 56px) 和一些上下邊距 */
+    /* 使用 calc 無法直接用於 vh，改用 flex 佈局控制 */
+  }
+  
+  .goal-input-row {
+    flex-shrink: 0; /* 不壓縮 */
+    z-index: 10; /* 確保在滾動內容之上 */
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .chat-display-row {
+    flex-grow: 1; /* 佔滿剩餘垂直空間 */
+    overflow-y: auto; /* 內容超出時顯示滾動條 */
+    padding-bottom: 1rem; /* 避免內容被輸入框遮擋 */
+    /* 為了讓 flex-grow 生效，父容器 (或其祖先) 需要有定義的高度，
+       例如 App.js 中的 main-content 或直接在 .training-room-container 上設定 */
+    min-height: 0; /* critical for flex-grow in some contexts */
+  }
+  
+  .chat-display-area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem; /* 訊息間距 */
+    padding: 0.5rem 1rem; /* 左右留白 */
+  }
+  
+  .message-input-row {
+    flex-shrink: 0; /* 不壓縮 */
+    border-top: 1px solid #dee2e6;
+  }
+  
+  /* 訊息對齊與樣式 */
+  .message-row {
+    display: flex;
+    width: 100%;
+  }
+  
+  .user-row {
+    justify-content: flex-start; /* 使用者訊息整體靠左 */
+  }
+  
+  .ai-row {
+    justify-content: flex-end; /* AI 訊息整體靠右 */
+  }
+  
+  .system-row {
+    justify-content: center; /* 系統訊息置中 */
+  }
+  
+  .message {
+    padding: 0.6rem 1rem;
+    border-radius: 1.2rem; /* 更圓潤的邊角 */
+    max-width: 75%; /* 訊息最大寬度 */
+    word-wrap: break-word; /* 自動換行 */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    line-height: 1.5;
+    position: relative; /* 為了可能的 :before/:after 偽元素 */
+  }
+  
+  /* User message: 左上角氣泡 */
+  .user-message {
+    background-color: var(--bs-primary); /* 使用主題色 */
+    color: white;
+    border-bottom-left-radius: 0.3rem; /* 左下角變尖 */
+    margin-right: auto; /* 將其推到左邊 */
+    align-self: flex-start; /* 垂直方向靠上 */
+  }
+  
+  /* AI message: 右下角氣泡 */
+  .ai-message {
+    background-color: #e9ecef; /* 淡灰色背景 */
+    color: #212529; /* 深色文字 */
+    border: 1px solid #dee2e6;
+    border-bottom-right-radius: 0.3rem; /* 右下角變尖 */
+    margin-left: auto; /* 將其推到右邊 */
+    align-self: flex-end; /* 垂直方向靠下 */
+  }
+  
+  /* System message: 中間提示 */
+  .system-message {
+      background-color: #fff3cd; /* 淡黃色背景 */
+      color: #664d03; /* 深黃色文字 */
+      border: 1px solid #ffe69c;
+      max-width: 90%;
+      text-align: center;
+      font-size: 0.85rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.25rem;
+      align-self: center; /* 垂直居中 */
+  }
+  
+  /* 用於佔據空間，將 user 推向左邊，ai 推向右邊 */
+  /* 注意：在 flex 佈局中，margin:auto 比 spacer div 更常用且簡單 */
+  /* 因此移除了 .spacer class 和相關 CSS */
+  
+  /* MessageInput 自適應高度 */
+  .message-input-row textarea {
+      transition: height 0.1s ease-in-out; /* 高度變化動畫 */
+  }
+  
+  /* Markdown 渲染的基本樣式 (可以按需擴展) */
+  .message pre {
+    background-color: rgba(0,0,0,0.05);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    overflow-x: auto;
+    font-size: 0.9em;
+  }
+  .message code {
+    background-color: rgba(0,0,0,0.05);
+    padding: 0.1em 0.3em;
+    border-radius: 0.2em;
+    font-size: 0.9em;
+  }
+  .message blockquote {
+    border-left: 3px solid #adb5bd;
+    padding-left: 0.8rem;
+    margin-left: 0;
+    color: #6c757d;
+  }
+  .message ul, .message ol {
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+  }
+  .message p {
+      margin-bottom: 0.5rem; /* 段落間距 */
+  }
+  .message p:last-child {
+      margin-bottom: 0; /* 最後一段無下邊距 */
+  }

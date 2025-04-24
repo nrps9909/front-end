@@ -1,0 +1,118 @@
+/* src/styles/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+/* 引入 Bootstrap Icons */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+
+
+body {
+  font-family: 'Noto Sans TC', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+  background-color: #f8f9fa; /* 更柔和的背景色 */
+  color: #343a40; /* 深灰色文字 */
+  line-height: 1.6;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding-bottom: 2rem;
+}
+
+/* 自訂 Bootstrap 顏色 (可選) */
+:root {
+  --bs-primary: #5a67d8; /* 柔和的紫色/藍色 */
+  --bs-secondary: #6c757d;
+  --bs-success: #38a169; /* 柔和的綠色 */
+  --bs-info: #3182ce;    /* 柔和的藍色 */
+  --bs-warning: #dd6b20; /* 柔和的橙色 */
+  --bs-danger: #e53e3e;   /* 柔和的紅色 */
+  --bs-light: #f8f9fa;
+  --bs-dark: #343a40;
+  --bs-font-sans-serif: 'Noto Sans TC', sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* 導覽列 */
+.navbar {
+    border-bottom: 1px solid #e9ecef;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--bs-primary) !important;
+}
+
+/* 卡片 */
+.card {
+  border: 1px solid #e9ecef;
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+.card:hover {
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.1) !important;
+  /* transform: translateY(-2px); */
+}
+
+.card-header {
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 500;
+}
+
+/* 按鈕 */
+.btn {
+    border-radius: 0.3rem;
+    font-weight: 500;
+}
+
+/* 強調溫暖/陪伴感 */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--bs-dark);
+    font-weight: 500;
+}
+
+/* 連結樣式 */
+a {
+    color: var(--bs-primary);
+    text-decoration: none;
+}
+a:hover {
+    color: darken(var(--bs-primary), 10%);
+    text-decoration: underline;
+}
+
+/* Alert 樣式微調 */
+.alert {
+    border-left-width: 4px;
+    border-radius: 0.25rem;
+}
+.alert-danger { border-left-color: var(--bs-danger); }
+.alert-warning { border-left-color: var(--bs-warning); }
+.alert-info { border-left-color: var(--bs-info); }
+.alert-success { border-left-color: var(--bs-success); }
+
+
+/* Scrollbar 美化 (可選，跨瀏覽器兼容性可能不同) */
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #adb5bd #f8f9fa; /* thumb track */
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f8f9fa;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #adb5bd;
+  border-radius: 10px;
+  border: 2px solid #f8f9fa; /* creates padding around thumb */
+}

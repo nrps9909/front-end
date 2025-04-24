@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; // 引入 Bootstrap CSS
+import './styles/App.css'; // 引入全局樣式 (後面會建立)
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
