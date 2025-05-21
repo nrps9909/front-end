@@ -76,12 +76,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 連結樣式 */
 a {
-    color: var(--bs-primary);
-    text-decoration: none;
+  color: var(--bs-primary);
+  text-decoration: none;
 }
 a:hover {
-    color: darken(var(--bs-primary), 10%);
-    text-decoration: underline;
+  color: #4752b0; /* 例如 #5a67d8 的一個深色版本，你可以微調 */
+  text-decoration: underline;
 }
 
 /* Alert 樣式微調 */
