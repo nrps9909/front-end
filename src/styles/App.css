@@ -116,3 +116,104 @@ a:hover {
   border-radius: 10px;
   border: 2px solid #f8f9fa; /* creates padding around thumb */
 }
+
+/* 訊息對齊與樣式 - Instagram 風格 */
+.message-row {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.5rem; /* IG 風格間距 */
+}
+
+/* 使用者訊息的行，內容靠右 */
+.user-row {
+  justify-content: flex-end;
+}
+
+/* AI 訊息的行，內容靠左 */
+.ai-row {
+  justify-content: flex-start;
+}
+
+.system-row {
+  justify-content: center;
+}
+
+.message {
+  padding: 0.8rem 1rem;
+  border-radius: 22px; /* IG 風格圓角 */
+  max-width: 70%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  box-shadow: none; /* IG 沒有陰影 */
+  line-height: 1.4;
+  position: relative;
+  white-space: normal;
+  font-size: 0.95rem; /* IG 風格字體大小 */
+}
+
+/* User message: IG 風格右側藍色氣泡 */
+.user-message {
+  background-color: #0095F6; /* IG 藍色 */
+  color: white;
+  border-bottom-right-radius: 4px; /* IG 風格右下角小圓角 */
+}
+
+/* AI message: IG 風格左側灰色氣泡 */
+.ai-message {
+  background-color: #EFEFEF; /* IG 灰色 */
+  color: #262626; /* IG 文字顏色 */
+  border: none; /* 移除邊框 */
+  border-bottom-left-radius: 4px; /* IG 風格左下角小圓角 */
+}
+
+/* System message: 改為 IG 風格中間提示 */
+.system-message {
+    background-color: transparent; /* 透明背景 */
+    color: #8E8E8E; /* IG 輕灰色文字 */
+    border: none;
+    max-width: 90%;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 0.4rem 0;
+    border-radius: 0;
+    font-weight: 500;
+}
+
+/* Markdown 渲染的基本樣式 (可以按需擴展) */
+.message pre {
+  background-color: rgba(0,0,0,0.05);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  overflow-x: auto;
+  font-size: 0.9em;
+  white-space: pre; /* 程式碼區塊通常需要保留所有空白 */
+}
+.message code:not(pre code) { /* 行內 code */
+  background-color: rgba(0,0,0,0.05);
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+  font-size: 0.9em;
+}
+.message blockquote {
+  border-left: 3px solid #adb5bd;
+  padding-left: 0.8rem;
+  margin-left: 0;
+  color: #6c757d;
+}
+.message ul, .message ol {
+    padding-left: 1.5rem; /* 確保列表有足夠的縮進 */
+    margin-bottom: 0.5rem;
+}
+.message p {
+    margin-bottom: 0.5rem;
+}
+.message p:last-child {
+    margin-bottom: 0;
+}
+
+/* ChatMessage.js 中用到的 avatar class (如果有的話) */
+.chat-avatar {
+  /* 如果需要，可以在這裡添加特定於頭像的樣式 */
+  /* 例如 margin, border 等 */
+  /* alignSelf: 'flex-start' 已在 inline style 中設定 */
+}

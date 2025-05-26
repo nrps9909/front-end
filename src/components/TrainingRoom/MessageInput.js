@@ -1,4 +1,5 @@
-import React, { useRef } from 'react'; // *** 移除 useEffect ***
+// src/components/TrainingRoom/MessageInput.js
+import React, { useRef, useEffect } from 'react';
 import { Form, Button, InputGroup, Spinner } from 'react-bootstrap';
 
 function MessageInput({
@@ -8,91 +9,115 @@ function MessageInput({
     onGetFeedback,
     isLoading,
     isGettingFeedback,
-    disabled
+    disabled,
+    showFeedbackButton = false
 }) {
-  const textareaRef = useRef(null); // Ref 仍然保留，但不用於高度調整
+  const textareaRef = useRef(null);
 
-  // *** 移除自動調整高度的 useEffect ***
-  /*
+  // 自動調整輸入框高度
   useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto'; // Reset height
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set to scroll height
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = '0px';
+      const newHeight = Math.min(120, textarea.scrollHeight);
+      textarea.style.height = `${newHeight}px`;
     }
   }, [currentMessage]);
-  */
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey && !isLoading && !isGettingFeedback && !disabled && currentMessage.trim()) {
+    if (e.key === 'Enter' && !e.shiftKey && !isLoading && !isGettingFeedback && !disabled) {
       e.preventDefault();
-      onSendMessage();
+      if (currentMessage.trim() !== '') {
+          onSendMessage();
+          if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto'; 
+          }
+      }
     }
   };
 
   const handleSendClick = () => {
       if (!isLoading && !isGettingFeedback && !disabled && currentMessage.trim()) {
           onSendMessage();
+          if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto'; 
+          }
       }
   }
 
   const handleFeedbackClick = () => {
-      if (!isLoading && !isGettingFeedback && !disabled) {
+      if (!isLoading && !isGettingFeedback && !disabled && onGetFeedback) {
           onGetFeedback();
       }
   }
 
+  // IG 風格輸入框
   return (
-    <InputGroup>
-      {/* 快速回饋按鈕 */}
-      <Button
-        variant="outline-info"
-        onClick={handleFeedbackClick}
-        disabled={isLoading || isGettingFeedback || disabled}
-        title="讓 AI 針對本次對話給出回饋"
-      >
-        {isGettingFeedback ? (
-            <>
+    <InputGroup className="instagram-input">
+      {showFeedbackButton && onGetFeedback && (
+        <Button
+          variant="link"
+          onClick={handleFeedbackClick}
+          disabled={isLoading || isGettingFeedback || disabled}
+          title="讓 AI 針對您在本次對話中的表現給出回饋"
+          className="ig-button"
+          style={{
+            color: '#0095F6',
+            background: 'none',
+            border: 'none',
+            fontSize: '1rem',
+            padding: '0 15px'
+          }}
+        >
+          {isGettingFeedback ? (
               <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-              <span className="visually-hidden">請求中...</span>
-            </>
-        ) : (
-            "🤔 我說得如何？"
-        )}
-      </Button>
+          ) : (
+              <i className="bi bi-emoji-smile"></i>
+          )}
+        </Button>
+      )}
 
       <Form.Control
-        ref={textareaRef} // Ref 仍然可以保留給未來可能的其他用途
+        ref={textareaRef}
         as="textarea"
-        rows={2} // *** 設定固定的初始行數，例如 2 或 3 ***
-        placeholder={disabled ? "請先設定目標並選擇角色..." : "輸入訊息 (Shift+Enter 換行)..."}
+        rows={1}
+        placeholder={disabled ? "請先完成上方設定..." : "傳送訊息..."}
         value={currentMessage}
         onChange={(e) => onMessageChange(e.target.value)}
         onKeyDown={handleKeyDown}
         disabled={isLoading || isGettingFeedback || disabled}
-        // *** 保持這些樣式，允許內部滾動 ***
-        style={{ resize: 'none', overflowY: 'auto', maxHeight: '150px' }}
+        style={{ 
+          resize: 'none', 
+          overflow: 'hidden', 
+          minHeight: '38px',
+          maxHeight: '120px',
+          transition: 'height 0.1s ease',
+          border: 'none',
+          borderRadius: '20px',
+          padding: '8px 12px',
+          background: '#EFEFEF',
+          fontSize: '0.95rem'
+        }} 
         aria-label="訊息輸入框"
       />
 
-      {/* 語音輸入預留圖示 (未來功能) */}
-      {/*
-      <Button variant="outline-secondary" disabled={isLoading || isGettingFeedback || disabled} title="語音輸入 (尚未啟用)">
-          <i className="bi bi-mic"></i>
-      </Button>
-      */}
-
       <Button
-        variant="primary"
+        variant="link"
         onClick={handleSendClick}
         disabled={isLoading || isGettingFeedback || disabled || !currentMessage.trim()}
+        style={{
+          color: currentMessage.trim() ? '#0095F6' : '#B2DFFC',
+          background: 'none',
+          border: 'none',
+          fontWeight: 'bold',
+          fontSize: '0.9rem',
+          padding: '0 10px'
+        }}
       >
         {isLoading ? (
-            <>
-                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true"/>
-                <span className="visually-hidden">傳送中...</span>
-            </>
+            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true"/>
         ) : (
-             <i className="bi bi-send"></i>
+            "傳送"
         )}
       </Button>
     </InputGroup>

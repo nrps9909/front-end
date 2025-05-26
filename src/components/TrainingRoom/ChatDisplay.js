@@ -1,8 +1,9 @@
-import React, { useRef, useEffect, useLayoutEffect } from 'react';
+// src/components/TrainingRoom/ChatDisplay.js
+import React, { useRef, useLayoutEffect } from 'react';
 import { Spinner, Alert } from 'react-bootstrap';
 import ChatMessage from './ChatMessage';
 
-function ChatDisplay({ messages, isLoading }) {
+function ChatDisplay({ messages, isLoading, aiAvatarUrl }) {
   const chatEndRef = useRef(null);
   const scrollContainerRef = useRef(null);
   const prevMessagesLengthRef = useRef(messages.length);
@@ -11,75 +12,69 @@ function ChatDisplay({ messages, isLoading }) {
     const scrollContainer = scrollContainerRef.current;
     if (!scrollContainer) return;
 
-    const isScrollable = scrollContainer.scrollHeight > scrollContainer.clientHeight;
-    // *** 判斷是否是「真的」新訊息加入（避免初始加載或清空觸發） ***
     const messagesWereAdded = messages.length > prevMessagesLengthRef.current;
-    const scrollThreshold = 100;
+    // 只有當新訊息加入且使用者已經在底部附近時才自動滾動
+    const scrollThreshold = 150; // 可以調整這個值，判斷多接近底部才算“在底部”
     let isNearBottom = true;
 
-    if (isScrollable) {
-        // 檢查滾動位置是否接近底部
+    if (scrollContainer.scrollHeight > scrollContainer.clientHeight) { // 判斷是否可滾動
         isNearBottom = scrollContainer.scrollHeight - scrollContainer.scrollTop <= scrollContainer.clientHeight + scrollThreshold;
-    } else {
-        // 如果不可滾動，總是視為在底部（以便第一條訊息出現時能滾動）
-        isNearBottom = true;
     }
-
-    // 只有在以下情況才滾動：
-    // a) 確實有新訊息加入 (避免清空或初始加載觸發滾動)
-    // b) 且用戶原本就在底部附近 (或容器不可滾動)
+    
     if (messagesWereAdded && isNearBottom) {
-        const timer = setTimeout(() => {
-            // 確保 chatEndRef 存在
+        const timer = setTimeout(() => { // 使用 setTimeout 確保 DOM 更新完成
             chatEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-        }, 50); // 短延遲
-        // 清理函數
-        return () => clearTimeout(timer);
+        }, 50); 
+        return () => clearTimeout(timer); // 清理 timeout
     }
-
-    // 更新前一次的訊息數量，必須在判斷邏輯之後
-    prevMessagesLengthRef.current = messages.length;
-
-  }, [messages]); // 依賴項保持 messages
+    prevMessagesLengthRef.current = messages.length; // 更新上一次的訊息數量
+  }, [messages]); // 依賴 messages 陣列
 
 
   return (
     <div
       ref={scrollContainerRef}
-      className="chat-display-area" // 確認沒有 mb-3
+      className="chat-display-area" 
       style={{
-        overflowY: 'auto', // 允許滾動
-        height: '100%',    // 佔滿父級 flex-grow 分配的高度
+        overflowY: 'auto',
+        height: '100%',    
         display: 'flex',
         flexDirection: 'column',
-        // justifyContent: 'flex-start' // 預設就是 flex-start，內容會從頂部開始
+        padding: '0 8px',
+        backgroundColor: 'white',
+        msOverflowStyle: 'auto', // 為IE添加
+        scrollbarWidth: 'auto', // 為Firefox添加
+        WebkitOverflowScrolling: 'touch' // 為iOS添加滾动慣性
       }}
     >
-      {/* 1. 空狀態提示 (如果沒有訊息) */}
       {messages.length === 0 && !isLoading && (
-        <Alert variant="info" className="text-center small p-2 mx-auto mt-2" style={{maxWidth: '80%', flexShrink: 0 }}>
-          設定好目標後，就可以開始和 AI 對話練習囉！
-        </Alert>
-      )}
-
-      {/* 2. 訊息列表 - 直接 map */}
-      {/* *** 移除外層帶有 marginTop: 'auto' 的 div *** */}
-      {messages.map((msg) => (
-        <ChatMessage key={msg.id} sender={msg.sender} text={msg.text} />
-      ))}
-
-      {/* 3. 加載指示器 (如果有正在加載) */}
-      {isLoading && (
-        <div className="d-flex justify-content-center align-items-center my-2 p-2 text-muted" style={{ flexShrink: 0 }}>
-          <Spinner animation="border" role="status" size="sm" className="me-2">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-          AI 正在思考...
+        <div className="text-center my-4">
+          <div style={{color: '#8E8E8E', fontSize: '0.9rem'}}>
+            開始和 AI 角色對話練習吧！
+          </div>
         </div>
       )}
 
-      {/* 4. 滾動目標錨點 - 放在所有視覺內容的最後 */}
-      <div ref={chatEndRef} style={{ height: '1px', flexShrink: 0 }} />
+      {messages.map((msg) => (
+        <ChatMessage 
+            key={msg.id} 
+            sender={msg.sender} 
+            text={msg.text} 
+            avatarUrl={msg.sender === 'ai' ? aiAvatarUrl : null}
+        />
+      ))}
+
+      {isLoading && (
+        <div className="d-flex justify-content-start align-items-center my-2" style={{ flexShrink: 0 }}>
+          <div className="d-flex align-items-center ms-3" style={{ color: '#8E8E8E', fontSize: '0.8rem' }}>
+            <div className="typing-indicator me-2">
+              <span></span><span></span><span></span>
+            </div>
+            正在輸入
+          </div>
+        </div>
+      )}
+      <div ref={chatEndRef} style={{ height: '1px', flexShrink: 0 }} /> 
     </div>
   );
 }

@@ -1,135 +1,250 @@
-/* src/styles/TrainingRoom.css */
+/* 訊息對齊與樣式 - Instagram 樣式 */
+.message-row {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.5rem; /* IG 風格間距 */
+}
 
+/* 使用者訊息的行，內容靠右 */
+.user-row {
+  justify-content: flex-end;
+}
+
+/* AI 訊息的行，內容靠左 */
+.ai-row {
+  justify-content: flex-start;
+}
+
+.system-row {
+  justify-content: center;
+}
+
+.message {
+  padding: 0.8rem 1rem;
+  border-radius: 22px; /* IG 風格圓角 */
+  max-width: 70%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  box-shadow: none; /* IG 沒有陰影 */
+  line-height: 1.4;
+  position: relative;
+  white-space: normal;
+  font-size: 0.95rem; /* IG 風格字體大小 */
+}
+
+/* User message: IG 風格右側藍色氣泡 */
+.user-message {
+  background-color: #0095F6; /* IG 藍色 */
+  color: white;
+  border-bottom-right-radius: 4px; /* IG 風格右下角小圓角 */
+  text-align: left;
+  white-space: normal !important; /* 使用normal而非pre-wrap */
+  word-wrap: break-word; /* 確保長單詞換行 */
+  word-break: break-word; /* 確保文字正確換行 */
+  display: inline-block; /* 確保bubble只有需要的寬度 */
+  max-width: 70%; /* 控制最大寬度 */
+  margin-left: auto; /* 確保靠右對齊 */
+}
+
+/* 專門針對使用者訊息容器的修正 */
+.user-message-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* AI message: IG 風格左側灰色氣泡 */
+.ai-message {
+  background-color: #EFEFEF; /* IG 灰色 */
+  color: #262626; /* IG 文字顏色 */
+  border: none; /* 移除邊框 */
+  border-bottom-left-radius: 4px; /* IG 風格左下角小圓角 */
+  text-align: left;
+  white-space: normal !important; /* 使用normal而非pre-wrap */
+  word-wrap: break-word;
+  word-break: break-word;
+  display: inline-block;
+  max-width: 70%;
+}
+
+/* AI 消息容器，确保正确对齐 */
+.ai-message-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+/* System message: 改為 IG 風格中間提示 */
+.system-message {
+    background-color: transparent; /* 透明背景 */
+    color: #8E8E8E; /* IG 輕灰色文字 */
+    border: none;
+    max-width: 90%;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 0.4rem 0;
+    border-radius: 0;
+    font-weight: 500;
+}
+
+/* 聊天容器 IG 風格 */
 .training-room-container {
-    display: flex;
-    flex-direction: column;
-    /* 減去 Navbar 高度 (約 56px) 和一些上下邊距 */
-    /* 使用 calc 無法直接用於 vh，改用 flex 佈局控制 */
+  background-color: white; /* IG 背景色 */
+  max-width: 935px; /* IG 標準寬度 */
+  margin: 0 auto;
+  border: 1px solid #DBDBDB; /* IG 邊框 */
+}
+
+/* IG 風格頂部導航 */
+.goal-input-row {
+  border-bottom: 1px solid #DBDBDB; /* IG 分隔線 */
+  padding: 0.75rem 1rem !important;
+  background-color: white !important;
+}
+
+/* IG 風格頭像 */
+.chat-avatar {
+  width: 28px !important; 
+  height: 28px !important;
+  margin-right: 8px;
+  border: none !important;
+}
+
+/* IG 風格輸入區域 */
+.message-input-row {
+  border-top: 1px solid #DBDBDB;
+  padding: 0.75rem 1rem !important;
+  background-color: white !important;
+}
+
+/* Markdown 渲染的基本樣式 (可以按需擴展) */
+/* ... (Markdown 樣式保持不變) ... */
+.message pre {
+  background-color: rgba(0,0,0,0.05);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  overflow-x: auto;
+  font-size: 0.9em;
+  white-space: pre; /* 程式碼區塊通常需要保留所有空白 */
+}
+.message code:not(pre code) { /* 行內 code */
+  background-color: rgba(0,0,0,0.05);
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+  font-size: 0.9em;
+}
+.message blockquote {
+  border-left: 3px solid #adb5bd;
+  padding-left: 0.8rem;
+  margin-left: 0;
+  color: #6c757d;
+}
+.message ul, .message ol {
+    padding-left: 1.5rem; /* 確保列表有足夠的縮進 */
+    margin-bottom: 0.5rem;
+}
+.message p {
+    margin-bottom: 0.5rem;
+}
+.message p:last-child {
+    margin-bottom: 0;
+}
+
+/* Instagram 樣式的打字指示器 */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+}
+
+.typing-indicator span {
+  height: 8px;
+  width: 8px;
+  margin: 0 1px;
+  background-color: #8E8E8E;
+  display: block;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: typing 1s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0% {
+    transform: translateY(0px);
+    opacity: 0.4;
   }
-  
-  .goal-input-row {
-    flex-shrink: 0; /* 不壓縮 */
-    z-index: 10; /* 確保在滾動內容之上 */
-    border-bottom: 1px solid #dee2e6;
+  50% {
+    transform: translateY(-5px);
+    opacity: 0.8;
   }
-  
-  .chat-display-row {
-    flex-grow: 1; /* 佔滿剩餘垂直空間 */
-    overflow-y: auto; /* 內容超出時顯示滾動條 */
-    padding-bottom: 1rem; /* 避免內容被輸入框遮擋 */
-    /* 為了讓 flex-grow 生效，父容器 (或其祖先) 需要有定義的高度，
-       例如 App.js 中的 main-content 或直接在 .training-room-container 上設定 */
-    min-height: 0; /* critical for flex-grow in some contexts */
+  100% {
+    transform: translateY(0px);
+    opacity: 0.4;
   }
-  
-  .chat-display-area {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem; /* 訊息間距 */
-    padding: 0.5rem 1rem; /* 左右留白 */
-  }
-  
-  .message-input-row {
-    flex-shrink: 0; /* 不壓縮 */
-    border-top: 1px solid #dee2e6;
-  }
-  
-  /* 訊息對齊與樣式 */
-  .message-row {
-    display: flex;
-    width: 100%;
-  }
-  
-  .user-row {
-    justify-content: flex-start; /* 使用者訊息整體靠左 */
-  }
-  
-  .ai-row {
-    justify-content: flex-end; /* AI 訊息整體靠右 */
-  }
-  
-  .system-row {
-    justify-content: center; /* 系統訊息置中 */
-  }
-  
-  .message {
-    padding: 0.6rem 1rem;
-    border-radius: 1.2rem; /* 更圓潤的邊角 */
-    max-width: 75%; /* 訊息最大寬度 */
-    word-wrap: break-word; /* 自動換行 */
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    line-height: 1.5;
-    position: relative; /* 為了可能的 :before/:after 偽元素 */
-  }
-  
-  /* User message: 左上角氣泡 */
-  .user-message {
-    background-color: var(--bs-primary); /* 使用主題色 */
-    color: white;
-    border-bottom-left-radius: 0.3rem; /* 左下角變尖 */
-    margin-right: auto; /* 將其推到左邊 */
-    align-self: flex-start; /* 垂直方向靠上 */
-  }
-  
-  /* AI message: 右下角氣泡 */
-  .ai-message {
-    background-color: #e9ecef; /* 淡灰色背景 */
-    color: #212529; /* 深色文字 */
-    border: 1px solid #dee2e6;
-    border-bottom-right-radius: 0.3rem; /* 右下角變尖 */
-    margin-left: auto; /* 將其推到右邊 */
-    align-self: flex-end; /* 垂直方向靠下 */
-  }
-  
-  /* System message: 中間提示 */
-  .system-message {
-      background-color: #fff3cd; /* 淡黃色背景 */
-      color: #664d03; /* 深黃色文字 */
-      border: 1px solid #ffe69c;
-      max-width: 90%;
-      text-align: center;
-      font-size: 0.85rem;
-      padding: 0.4rem 0.8rem;
-      border-radius: 0.25rem;
-      align-self: center; /* 垂直居中 */
-  }
-  
-  /* 用於佔據空間，將 user 推向左邊，ai 推向右邊 */
-  /* 注意：在 flex 佈局中，margin:auto 比 spacer div 更常用且簡單 */
-  /* 因此移除了 .spacer class 和相關 CSS */
-  
-  /* MessageInput 自適應高度 */
-  .message-input-row textarea {
-      transition: height 0.1s ease-in-out; /* 高度變化動畫 */
-  }
-  
-  /* Markdown 渲染的基本樣式 (可以按需擴展) */
-  .message pre {
-    background-color: rgba(0,0,0,0.05);
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-    overflow-x: auto;
-    font-size: 0.9em;
-  }
-  .message code {
-    background-color: rgba(0,0,0,0.05);
-    padding: 0.1em 0.3em;
-    border-radius: 0.2em;
-    font-size: 0.9em;
-  }
-  .message blockquote {
-    border-left: 3px solid #adb5bd;
-    padding-left: 0.8rem;
-    margin-left: 0;
-    color: #6c757d;
-  }
-  .message ul, .message ol {
-      padding-left: 1.5rem;
-      margin-bottom: 0.5rem;
-  }
-  .message p {
-      margin-bottom: 0.5rem; /* 段落間距 */
-  }
-  .message p:last-child {
-      margin-bottom: 0; /* 最後一段無下邊距 */
-  }
+}
+
+/* Instagram 輸入框樣式 */
+.instagram-input {
+  border-radius: 22px;
+  background: #EFEFEF;
+  padding: 0 5px;
+  margin: 0;
+}
+
+/* Instagram 時間戳樣式 */
+.message-timestamp {
+  font-size: 0.65rem;
+  color: #8E8E8E;
+  margin-top: 4px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+/* 評估訊息特殊樣式 */
+.evaluation-message {
+  text-align: left !important;
+  background-color: #f0f2f5 !important; /* 淺灰色背景 */
+  color: #262626 !important;
+  padding: 1rem !important;
+  width: 90%;
+  max-width: 90% !important;
+  border-radius: 12px !important;
+}
+
+.evaluation-message ul,
+.evaluation-message ol,
+.evaluation-message p,
+.evaluation-message h1,
+.evaluation-message h2,
+.evaluation-message h3,
+.evaluation-message h4,
+.evaluation-message h5,
+.evaluation-message h6 {
+  text-align: left !important;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.evaluation-message ul,
+.evaluation-message ol {
+  padding-left: 1.5rem !important;
+}
+
+/* 讓使用者訊息行保持右對齊 */
+.justify-content-end .message-container {
+  justify-content: flex-end;
+  display: flex;
+  width: 100%;
+}

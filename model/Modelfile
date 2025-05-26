@@ -1,4 +1,4 @@
-FROM /mnt/d/TAHRD/TAHRD-Graduation-Project/front-end/model/gguf_models/huayi_merged_q4km.gguf
+FROM /mnt/c/front-end/model/gguf_models/huayi_merged_q4km.gguf
 
 TEMPLATE """<|begin_of_text|><|start_header_id|>system<|end_header_id|>
 {{ .System }}<|eot_id|><|start_header_id|>user<|end_header_id|>
